@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sendy Creative Official — Desain Grafis & Editing Video</title>
+    <style>
+        *{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', 'Poppins', sans-serif;}
+        :root{
+            --p: #a855f7; --s: #06b6d4; --a: #ec4899;
+            --bg1: #050510; --bg2: #12122a; --bg3: #1e1e40;
+            --text: #f0f0ff; --muted: #a0a0c0;
+        }
+        body{
+            min-height:100vh; color:var(--text);
+            background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 50%, var(--bg3) 100%);
+            overflow-x:hidden; position:relative;
+            line-height:1.8;
+        }
+
+        /* ========== BACKGROUND ANIMASI — ALIRAN CAHAYA & PARTIKEL ========== */
+        .bg-wrap{position:fixed; inset:0; z-index:0; overflow:hidden;}
+        
+        /* Gradien bergerak pelan */
+        .bg-grad{
+            position:absolute; inset:0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(168,85,247,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(6,182,212,0.12) 0%, transparent 50%),
+                radial-gradient(circle at 50% 10%, rgba(236,72,153,0.10) 0%, transparent 50%);
+            animation: bgFlow 15s ease-in-out infinite alternate;
+        }
+        @keyframes bgFlow{
+            0%{transform:scale(1) rotate(0deg);}
+            50%{transform:scale(1.1) rotate(2deg);}
+            100%{transform:scale(1.05) rotate(-1deg);}
+        }
+
+        /* Partikel melayang berkedip */
+        .particles{position:absolute; inset:0;}
+        .particle{
+            position:absolute; width:4px; height:4px;
+            background:var(--p); border-radius:50%;
+            animation: particleFloat 20s ease-in-out infinite;
+        }
+        .particle:nth-child(1){top:10%; left:15%; animation-delay:0s;}
+        .particle:nth-child(2){top:25%; left:75%; width:3px; height:3px; background:var(--s); animation-delay:2s;}
+        .particle:nth-child(3){top:50%; left:10%; width:5px; height:5px; background:var(--a); animation-delay:4s;}
+        .particle:nth-child(4){top:70%; left:85%; animation-delay:1s;}
+        .particle:nth-child(5){top:85%; left:30%; width:3px; height:3px; background:var(--s); animation-delay:3s;}
+        .particle:nth-child(6){top:15%; left:50%; width:6px; height:6px; animation-delay:5s;}
+        .particle:nth-child(7){top:60%; left:65%; background:var(--a); animation-delay:2.5s;}
+        .particle:nth-child(8){top:35%; left:8%; width:4px; height:4px; animation-delay:6s;}
+        @keyframes particleFloat{
+            0%,100%{transform:translate(0,0) scale(1); opacity:0.3;}
+            25%{transform:translate(30px,-40px) scale(1.5); opacity:0.8;}
+            50%{transform:translate(-20px,-60px) scale(1); opacity:0.5;}
+            75%{transform:translate(40px,-20px) scale(1.3); opacity:0.9;}
+        }
+
+        /* Bentuk geometris berputar & melayang */
+        .shapes{position:absolute; inset:0; pointer-events:none;}
+        .shape{
+            position:absolute; border-radius:10px; background:rgba(255,255,255,0.02);
+            border:1px solid rgba(255,255,255,0.05);
+            animation: shapeFloat 25s ease-in-out infinite;
+            backdrop-filter:blur(5px);
+        }
+        .shape:nth-child(1){width:100px;height:100px;top:12%;left:5%;animation-delay:0s;}
+        .shape:nth-child(2){width:70px;height:70px;top:60%;right:10%;animation-delay:4s; border-radius:50%;}
+        .shape:nth-child(3){width:120px;height:120px;bottom:10%;left:15%;animation-delay:8s; transform:rotate(45deg);}
+        .shape:nth-child(4){width:55px;height:55px;top:30%;right:20%;animation-delay:2s;}
+        .shape:nth-child(5){width:85px;height:85px;bottom:20%;right:5%;animation-delay:6s; border-radius:50%;}
+        @keyframes shapeFloat{
+            0%{transform:translate(0,0) rotate(0deg) scale(1);}
+            25%{transform:translate(40px,-30px) rotate(90deg) scale(1.05);}
+            50%{transform:translate(-30px,20px) rotate(180deg) scale(0.95);}
+            75%{transform:translate(20px,40px) rotate(270deg) scale(1.02);}
+            100%{transform:translate(0,0) rotate(360deg) scale(1);}
+        }
+
+        /* Garis cahaya melintas pelan */
+        .scan-line{
+            position:absolute; top:0; left:-100%; width:100%; height:100vh;
+            background:linear-gradient(90deg, transparent, rgba(255,255,255,0.02), transparent);
+            animation: scan 12s linear infinite;
+        }
+        @keyframes scan{
+            0%{transform:translateX(0);}
+            100%{transform:translateX(300%);}
+        }
+
+        .container{
+            position:relative; z-index:2;
+            max-width:960px; margin:0 auto; padding:50px 24px; text-align:center;
+        }
+
+        /* ========== LOGO 3D — ANIMASI LENGKAP ========== */
+        .logo-box{
+            perspective:1500px; margin-bottom:12px; display:inline-block;
+            animation: logoEntrance 1.5s ease-out forwards;
+        }
+        @keyframes logoEntrance{
+            0%{opacity:0; transform:translateY(40px) rotateX(30deg);}
+            100%{opacity:1; transform:translateY(0) rotateX(0);}
+        }
+        .logo-text{
+            font-size:clamp(2.4rem, 8vw, 4.5rem); font-weight:900;
+            letter-spacing:3px; line-height:1.2;
+            background: linear-gradient(90deg, #f0e7ff 0%, #c084fc 20%, #a855f7 40%, #06b6d4 60%, #ec4899 80%, #f0e7ff 100%);
+            background-size:300% 100%;
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+            background-clip:text;
+            filter: drop-shadow(0 4px 12px rgba(168,85,247,0.4));
+            transform-style:preserve-3d;
+            animation: logoGradient 6s ease infinite, logo3D 8s ease-in-out infinite alternate, logoFloat 5s ease-in-out infinite;
+            position:relative;
+        }
+        @keyframes logoGradient{
+            0%{background-position:0% 50%;}
+            50%{background-position:100% 50%;}
+            100%{background-position:0% 50%;}
+        }
+        @keyframes logo3D{
+            0%{transform: rotateX(15deg) rotateY(-8deg) translateZ(0);}
+            100%{transform: rotateX(-15deg) rotateY(8deg) translateZ(15px);}
+        }
+        @keyframes logoFloat{
+            0%,100%{transform: translateY(0) rotateX(15deg) rotateY(-8deg); filter: drop-shadow(0 4px 12px rgba(168,85,247,0.4));}
+            50%{transform: translateY(-12px) rotateX(-8deg) rotateY(5deg); filter: drop-shadow(0 8px 25px rgba(168,85,247,0.5));}
+        }
+        .tagline{
+            font-size:1.15rem; color:#c4b5fd; letter-spacing:5px; margin-bottom:50px;
+            opacity:0; transform:translateY(25px) scale(0.95);
+            animation: fadeUp 1s ease forwards 0.5s;
+        }
+        @keyframes fadeUp{to{opacity:1; transform:translateY(0) scale(1);}}
+
+        /* ========== BIO BOX — MASUK DENGAN EFEK & CAHAYA KELILING ========== */
+        .bio-card{
+            background:rgba(255,255,255,0.04); backdrop-filter:blur(20px);
+            border:1px solid rgba(255,255,255,0.08); border-radius:24px;
+            padding:42px; margin-bottom:55px; line-height:2;
+            box-shadow: 0 8px 40px rgba(124,58,237,0.12);
+            opacity:0; transform:translateY(40px) scale(0.9);
+            animation: bioAppear 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.8s;
+            position:relative; overflow:hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes bioAppear{
+            to{opacity:1; transform:translateY(0) scale(1);}
+        }
+        .bio-card:hover{
+            transform: translateY(-8px) scale(0.98);
+            border-color:rgba(168,85,247,0.3);
+            box-shadow: 0 15px 50px rgba(124,58,237,0.2);
+        }
+        /* Cahaya berputar di pinggir */
+        .bio-card::before{
+            content:''; position:absolute; inset:-50%;
+            background:conic-gradient(from 0deg, transparent, var(--p), transparent, var(--s), transparent, var(--a), transparent);
+            animation: borderRotate 10s linear infinite;
+            opacity:0; transition:opacity 0.5s ease;
+        }
+        .bio-card:hover::before{opacity:0.15;}
+        @keyframes borderRotate{
+            100%{transform:rotate(360deg);}
+        }
+        .bio-inner{
+            position:relative; z-index:1;
+            background:rgba(10,10,30,0.6); padding:5px; border-radius:20px;
+        }
+        .bio-card h2{
+            font-size:1.5rem; margin-bottom:20px;
+            background:linear-gradient(90deg, var(--p), var(--a), var(--s), var(--p));
+            background-size:300% 100%;
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+            animation: textGradient 5s ease infinite;
+        }
+        @keyframes textGradient{
+            0%{background-position:0% 50%;}
+            50%{background-position:100% 50%;}
+            100%{background-position:0% 50%;}
+        }
+        .bio-card p{color:#e8e8ff; font-size:1.03rem; position:relative; z-index:1;}
+        .bio-card p strong{color:#e9d5ff; font-weight:600;}
+
+        /* ========== LAYANAN — MASUK SATU-SATU + HOVER 3D SADIS ========== */
+        .sec-title{
+            font-size:1.6rem; margin-bottom:35px; color:#ddd6fe;
+            opacity:0; transform:translateY(20px); filter:blur(4px);
+            animation: titleIn 1s ease forwards 1.1s;
+        }
+        @keyframes titleIn{
+            to{opacity:1; transform:translateY(0); filter:blur(0);}
+        }
+        .services-grid{
+            display:grid; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); gap:26px; margin-bottom:65px;
+        }
+        .service-item{
+            background:rgba(255,255,255,0.04); backdrop-filter:blur(15px);
+            border:1px solid rgba(255,255,255,0.08); border-radius:20px;
+            padding:32px 24px;
+            opacity:0; transform:translateY(50px) rotateX(15deg);
+            animation: cardRise 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position:relative; overflow:hidden;
+            transform-style:preserve-3d; perspective:800px;
+        }
+        .service-item:nth-child(1){animation-delay:1.3s;}
+        .service-item:nth-child(2){animation-delay:1.5s;}
+        .service-item:nth-child(3){animation-delay:1.7s;}
+        @keyframes cardRise{
+            to{opacity:1; transform:translateY(0) rotateX(0);}
+        }
+        /* Efek cahaya di belakang saat hover */
+        .service-item::after{
+            content:''; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+            background:radial-gradient(circle, rgba(168,85,247,0.15), transparent 60%);
+            opacity:0; transition:opacity 0.5s ease, transform 0.5s ease;
+            transform:translate(-30%, -30%);
+            pointer-events:none;
+        }
+        .service-item:hover{
+            transform: translateY(-15px) rotateX(10deg) rotateY(-8deg) scale(1.05);
+            border-color:rgba(168,85,247,0.4);
+            box-shadow: 
+                0 25px 50px rgba(168,85,247,0.2),
+                0 0 40px rgba(6,182,212,0.1);
+            background:rgba(255,255,255,0.06);
+        }
+        .service-item:hover::after{
+            opacity:1; transform:translate(0,0);
+        }
+        .service-item h3{
+            font-size:1.3rem; margin-bottom:12px; color:#f0abfc;
+            transition: all 0.3s ease;
+        }
+        .service-item:hover h3{
+            transform: translateZ(20px) translateY(-5px);
+            text-shadow: 0 5px 15px rgba(240,171,252,0.3);
+        }
+        .service-item p{color:#c8c8e0; line-height:1.8; font-size:0.98rem;}
+
+        /* ========== TOMBOL WA — ANIMASI PULS & CAHAYA MELINTAS ========== */
+        .cta-box{
+            margin:60px 0;
+            opacity:0; transform:translateY(30px) scale(0.9);
+            animation: fadeUpScale 1s ease forwards 2s;
+        }
+        @keyframes fadeUpScale{
+            to{opacity:1; transform:translateY(0) scale(1);}
+        }
+        .wa-button{
+            display:inline-flex; align-items:center; justify-content:center; gap:14px;
+            background:linear-gradient(90deg, #22c55e, #16a34a, #15803d, #16a34a, #22c55e);
+            background-size:300% 100%;
+            color:#fff; font-size:1.25rem; font-weight:700;
+            padding:20px 52px; border-radius:50px; text-decoration:none;
+            box-shadow: 0 6px 24px rgba(34,197,94,0.35);
+            transition: all 0.4s ease;
+            animation: waPulse 3s ease-in-out infinite 2.2s, waGradient 4s ease infinite 2.5s, waFloat 4s ease-in-out infinite 2.8s;
+            position:relative; overflow:hidden;
+        }
+        /* Cahaya meluncur di tombol */
+        .wa-button::before{
+            content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+            background:linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition:left 0.7s ease;
+        }
+        .wa-button:hover::before{left:100%;}
+        @keyframes waPulse{
+            0%{box-shadow:0 0 0 0 rgba(34,197,94,0.5);}
+            70%{box-shadow:0 0 0 20px rgba(34,197,94,0);}
+            100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}
+        }
+        @keyframes waGradient{
+            0%{background-position:0% 50%;}
+            50%{background-position:100% 50%;}
+            100%{background-position:0% 50%;}
+        }
+        @keyframes waFloat{
+            0%,100%{transform:translateY(0);}
+            50%{transform:translateY(-5px);}
+        }
+        .wa-button:hover{
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 15px 40px rgba(34,197,94,0.5);
+        }
+        .wa-icon{font-size:1.5rem; z-index:1;}
+
+        /* ========== FOOTER — MUNCUL HALUS ========== */
+        .footer{
+            margin-top:80px; padding-top:35px; border-top:1px solid rgba(255,255,255,0.08);
+            color:var(--muted); font-size:0.95rem; line-height:1.9;
+            opacity:0; animation:fadeUp 1s ease forwards 2.3s;
+        }
+        .footer .accent{
+            background:linear-gradient(90deg, var(--p), var(--s), var(--a), var(--p));
+            background-size:300% 100%;
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+            font-weight:700; animation: textGradient 6s ease infinite;
+        }
+
+        /* ========== RESPONSIVE — NYAMAN DI HP & LAPTOP ========== */
+        @media(max-width:480px){
+            .container{padding:35px 18px;}
+            .bio-card{padding:28px;}
+            .wa-button{padding:16px 38px; font-size:1.1rem;}
+            .services-grid{gap:20px;}
+            .shape, .particle{display:none;} /* biar ringan di HP */
+        }
+        @media (prefers-reduced-motion:reduce){
+            *,::before,::after{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-wrap">
+        <div class="bg-grad"></div>
+        <div class="scan-line"></div>
+        <div class="particles">
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+            <div class="particle"></div><div class="particle"></div>
+        </div>
+        <div class="shapes">
+            <div class="shape"></div><div class="shape"></div><div class="shape"></div>
+            <div class="shape"></div><div class="shape"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo-box">
+                <h1 class="logo-text">SENDY CREATIVE<br>OFFICIAL</h1>
+            </div>
+            <p class="tagline">— DESAIN GRAFIS • EDITING VIDEO • KARYA VISUAL —</p>
+        </header>
+
+        <div class="bio-card">
+            <div class="bio-inner">
+                <h2>🎨 TENTANG SENDY CREATIVE OFFICIAL</h2>
+                <p>Halo! Gw <strong>Sendy Kurnia Pratama</strong>, siswa jurusan Desain Komunikasi Visual yang percaya bahwa kreativitas itu bukan cuma soal bikin sesuatu yang bagus — tapi bikin sesuatu yang <strong>bermakna & berkesan</strong>.<br><br>
+                Sendy Creative Official hadir buat wujudkan ide lo jadi karya visual yang bikin orang berhenti, lihat, dan ingat. Detail gw jaga, hasil gw pastikan rapi, dan visi lo selalu jadi prioritas. Bukan sekadar bikin — tapi bikin dengan jiwa, dengan ketelitian, dan dengan standar yang lo banggakan.<br><br>
+                Lo punya cerita, gw punya alatnya. Mari bikin sesuatu yang bukan cuma bagus dilihat — tapi <strong>bernilai</strong>. 🚀</p>
+            </div>
+        </div>
+
+        <h2 class="sec-title">💼 LAYANAN — APA YANG BISA GW BUAT?</h2>
+        <div class="services-grid">
+            <div class="service-item">
+                <h3>🎬 Editing Video</h3>
+                <p>Reels, TikTok, YouTube, Cinematic, dll. Transisi halus, warna memukau, hasil jernih HD — siap tayang & bikin orang betah nonton!</p>
+            </div>
+            <div class="service-item">
+                <h3>🖼️ Desain Grafis & Poster</h3>
+                <p>Poster acara, promosi, ulang tahun, logo, banner — desain unik, modern, mata tertuju. Siap cetak & siap bagikan!</p>
+            </div>
+            <div class="service-item">
+                <h3>✨ Semua Kebutuhan Visual</h3>
+                <p>Thumbnail, feed Instagram, ilustrasi, desain kustom — sampaikan idemu, gw wujudkan lebih dari yang lo bayangkan!</p>
+            </div>
+        </div>
+
+        <div class="cta-box">
+            <a href="https://wa.me/6285381109726?text=Halo%20Sendy%20Creative%20Official!%20Saya%20mau%20pesan%20jasa%20desain%2Fediting.%20Bisa%20diskusi%3F" target="_blank" class="wa-button">
+                <span class="wa-icon">💬</span> MULAI PROYEK BERSAMA
+            </a>
+        </div>
+
+        <div class="footer">
+            <p class="accent">📲 WhatsApp: 0853-8110-9726</p>
+            <p>Sendy Creative Official © 2026 — Desain Grafis & Editing Video</p>
+            <p>— Karya Berkualitas • Harga Bersahabat • Hasil Memuaskan —</p>
+            <p>— Satu karya, seribu kesan —</p>
+        </div>
+    </div>
+</body>
+</html>
